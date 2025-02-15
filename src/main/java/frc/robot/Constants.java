@@ -18,9 +18,9 @@ package frc.robot;
  */
 public final class Constants {
   public static final class DriveConstants {
-    public static final int LEFT_LEADER_ID = 1;
-    public static final int LEFT_FOLLOWER_ID = 2;
-    public static final int RIGHT_LEADER_ID = 3;
+    public static final int LEFT_LEADER_ID = 2;
+    public static final int LEFT_FOLLOWER_ID = 3;
+    public static final int RIGHT_LEADER_ID = 1;
     public static final int RIGHT_FOLLOWER_ID = 4;
 
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
@@ -30,7 +30,7 @@ public final class Constants {
   }
 
   public static final class RollerConstants {
-    public static final int ROLLER_MOTOR_ID = 5;
+    public static final int ROLLER_MOTOR_ID = 6;
     public static final int ROLLER_MOTOR_CURRENT_LIMIT = 60;
     public static final double ROLLER_MOTOR_VOLTAGE_COMP = 10;
     public static final double ROLLER_CORAL_OUT = -.4;
@@ -40,7 +40,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int ARM_MOTOR_ID = 6;
+    public static final int ARM_MOTOR_ID = 5;
     public static final int ARM_MOTOR_CURRENT_LIMIT = 60;
     public static final double ARM_MOTOR_VOLTAGE_COMP = 10;
     public static final double ARM_SPEED_DOWN = 0.4;
