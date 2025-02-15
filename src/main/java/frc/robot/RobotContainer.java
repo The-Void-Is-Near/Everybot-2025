@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-
+/* 
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -43,7 +43,8 @@ public class RobotContainer {
   // may have to change the binding for left bumper.
   private final CommandXboxController m_operatorController = 
       new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
-
+*/
+  private final CommandXboxController xbController = new CommandXboxController(OperatorConstants.CONTROLLER_PORT);
   // The autonomous chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -67,15 +68,7 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
+ 
   private void configureBindings() {
 
     /** 
@@ -87,8 +80,8 @@ public class RobotContainer {
      * joystick matches the WPILib convention of counter-clockwise positive
      */
     m_drive.setDefaultCommand(new DriveCommand(m_drive,
-        () -> -m_driverController.getLeftY(),
-        () -> -m_driverController.getRightX(),
+        () -> -xbController.getLeftY(),
+        () -> -xbController.getRightX(),
         () -> true));
 
     /**
@@ -100,41 +93,41 @@ public class RobotContainer {
      * 
      * When switching to single driver mode switch to the B button
      */
-    m_driverController.leftBumper().whileTrue(new DriveCommand(m_drive, 
-        () -> -m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
-        () -> -m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
+    xbController.leftBumper().whileTrue(new DriveCommand(m_drive, 
+        () -> -xbController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
+        () -> -xbController.getRightX() * DriveConstants.SLOW_MODE_TURN,
         () -> true));
 
     /**
      * Here we declare all of our operator commands, these commands could have been
      * written in a more compact manner but are left verbose so the intent is clear.
      */
-    m_operatorController.rightBumper().whileTrue(new AlgieInCommand(m_roller));
+    xbController.rightBumper().whileTrue(new AlgieInCommand(m_roller));
     
     // Here we use a trigger as a button when it is pushed past a certain threshold
-    m_operatorController.rightTrigger(.2).whileTrue(new AlgieOutCommand(m_roller));
+    xbController.rightTrigger(.2).whileTrue(new AlgieOutCommand(m_roller));
 
     /**
      * The arm will be passively held up or down after this is used,
      * make sure not to run the arm too long or it may get upset!
      */
-    m_operatorController.leftBumper().whileTrue(new ArmUpCommand(m_arm));
-    m_operatorController.leftTrigger(.2).whileTrue(new ArmDownCommand(m_arm));
+    xbController.leftBumper().whileTrue(new ArmUpCommand(m_arm));
+    xbController.leftTrigger(.2).whileTrue(new ArmDownCommand(m_arm));
 
     /**
      * Used to score coral, the stack command is for when there is already coral
      * in L1 where you are trying to score. The numbers may need to be tuned, 
      * make sure the rollers do not wear on the plastic basket.
      */
-    m_operatorController.x().whileTrue(new CoralOutCommand(m_roller));
-    m_operatorController.y().whileTrue(new CoralStackCommand(m_roller));
+    xbController.x().whileTrue(new CoralOutCommand(m_roller));
+    xbController.y().whileTrue(new CoralStackCommand(m_roller));
 
     /**
      * POV is a direction on the D-Pad or directional arrow pad of the controller,
      * the direction of this will be different depending on how your winch is wound
      */
-    m_operatorController.pov(0).whileTrue(new ClimberUpCommand(m_climber));
-    m_operatorController.pov(180).whileTrue(new ClimberDownCommand(m_climber));
+    xbController.pov(0).whileTrue(new ClimberUpCommand(m_climber));
+    xbController.pov(180).whileTrue(new ClimberDownCommand(m_climber));
   }
 
   /**
